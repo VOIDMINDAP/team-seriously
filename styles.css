@@ -94,7 +94,9 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(4px)}dialog[open]{animati
 .st-links::before{content:"SÍGUENOS";font:700 11px 'Barlow Condensed';letter-spacing:.3em;color:#b00d08;padding:6px 22px 4px 52px}
 @media(max-width:900px){.sidetab{transform:translate(calc(100% - 41px),-50%)}.st-links a{padding:10px 16px 10px 10px}.st-links svg{width:19px;height:19px}.st-links::before{padding-left:40px}}
 /* Legacy Lancer cursor (img/cursor-lancer*.png) kept but unused since v5 */
-@media(pointer:fine){html,body,a,button,[role=button],summary,label,input,select,textarea,.card,.clip,.x,*{cursor:none!important}}
+/* v6 Onyx cursor (img/cursor-onyx*.svg). Legacy #mcur "El Mono es Gay" pill kept in CSS/JS but disabled */
+@media(hover:hover) and (pointer:fine){html,body,*{cursor:url(img/cursor-onyx.svg) 3 2,auto}a,a *,button,button *,[role=button],summary,label,select,.card,.card *,.clip,.clip *,.x{cursor:url(img/cursor-onyx-hand.svg) 12 2,pointer}input,textarea{cursor:text}.clip.empty{cursor:url(img/cursor-onyx.svg) 3 2,auto}}
+#mcur{display:none!important}
 #mcur{position:fixed;left:0;top:0;z-index:2147483647;pointer-events:none;opacity:0;transition:opacity .15s;will-change:transform}
 #mcur.on{opacity:1}#mcur .tip{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px #000}
 #mcur .pill{position:absolute;left:8px;top:10px;white-space:nowrap;padding:3px 10px 2px;border-radius:999px;font:800 15px/1.1 "Barlow Condensed","Teko",sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000;border:1.5px solid #000a;box-shadow:0 3px 10px #0007;background:linear-gradient(180deg,#e40303 0 16.66%,#ff8c00 0 33.33%,#ffed00 0 50%,#008026 0 66.66%,#004dff 0 83.33%,#750787 0) ,#750787;background-size:100% 100%;transform-origin:0 0;transition:transform .18s ease;overflow:hidden}
