@@ -75,3 +75,9 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(4px)}dialog[open]{animati
 .games{grid-template-columns:1fr}.game,.game:nth-child(1){grid-column:auto;grid-row:auto;aspect-ratio:16/10}.dossier{grid-template-columns:1fr}.dossier img{min-height:0;max-height:360px}
 .hero{align-items:flex-end;padding-bottom:70px}.hero-art{width:100%;opacity:.75}.hero-art img{object-position:30% center;-webkit-mask:linear-gradient(#000 40%,transparent 95%);mask:linear-gradient(#000 40%,transparent 95%)}.card h3{font-size:34px}.dossier .txt{padding:28px 22px}.modal-h{font-size:56px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+.social{display:flex;gap:18px;align-items:center}.social a{display:flex;color:#fff;opacity:.85;transition:color .2s,opacity .2s}.social a:hover,.social a:focus-visible{color:#b00d08;opacity:1}.social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.social a[hidden]{display:none}
+.nav-social{margin-left:28px;padding-left:28px;border-left:1px solid #ffffff22}.nav .links{margin-left:auto}
+.foot-social{justify-content:center;margin:22px 0 10px}.foot-social svg{width:22px;height:22px}
+.cta{margin-top:40px;text-align:center}
+@media(max-width:900px){.nav-social{margin-left:auto;padding-left:0;border:0;gap:16px}}

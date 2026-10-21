@@ -2,6 +2,12 @@
 // twitch: escribe el nombre del canal (ej. "mono_ts"). Vacío = estado "PRÓXIMAMENTE".
 // clips: agrega objetos { titulo, autor, url } (YouTube, clip de Twitch o .mp4).
 window.TS_CONFIG = {
+  // redes: enlaces sociales (nav y footer). YouTube vacío = icono oculto.
+  redes: {
+    twitch:  "https://www.twitch.tv/teamseriously2006",
+    discord: "https://discord.gg/q29QrADBXQ",
+    youtube: ""
+  },
   miembros: {
     mono:     { twitch: "" },
     replica:  { twitch: "" },
