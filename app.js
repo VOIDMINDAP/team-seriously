@@ -33,3 +33,4 @@ addEventListener('scroll',()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;n
  px.forEach(p=>{const r=p.parentElement.getBoundingClientRect();p.style.transform=`translateY(${-r.top*p.dataset.speed}px)`});
  if(scrollY<innerHeight)art.style.translate=`0 ${scrollY*.35}px`})},{passive:true});
 })();
+document.querySelectorAll('.st-drips .drip').forEach(g=>{g.style.setProperty('--d',(Math.random()*6).toFixed(2)+'s');g.style.setProperty('--t',(7+Math.random()*6).toFixed(2)+'s')});
