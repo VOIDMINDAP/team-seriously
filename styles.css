@@ -93,8 +93,18 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(4px)}dialog[open]{animati
 .st-links span{font:600 13px 'Barlow Condensed';letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .st-links::before{content:"SÍGUENOS";font:700 11px 'Barlow Condensed';letter-spacing:.3em;color:#b00d08;padding:6px 22px 4px 52px}
 @media(max-width:900px){.sidetab{transform:translate(calc(100% - 41px),-50%)}.st-links a{padding:10px 16px 10px 10px}.st-links svg{width:19px;height:19px}.st-links::before{padding-left:40px}}
-@media(pointer:fine){html,body{cursor:url(img/cursor-lancer.png) 1 1,auto;cursor:-webkit-image-set(url(img/cursor-lancer.png) 1x,url(img/cursor-lancer@2x.png) 2x) 1 1,auto;cursor:image-set(url(img/cursor-lancer.png) 1x,url(img/cursor-lancer@2x.png) 2x) 1 1,auto}
-a,button,[role=button],summary,label,.card{cursor:url(img/cursor-lancer-hot.png) 1 1,pointer;cursor:-webkit-image-set(url(img/cursor-lancer-hot.png) 1x,url(img/cursor-lancer-hot@2x.png) 2x) 1 1,pointer;cursor:image-set(url(img/cursor-lancer-hot.png) 1x,url(img/cursor-lancer-hot@2x.png) 2x) 1 1,pointer}}
+/* Legacy Lancer cursor (img/cursor-lancer*.png) kept but unused since v5 */
+@media(pointer:fine){html,body,a,button,[role=button],summary,label,input,select,textarea,.card,.clip,.x,*{cursor:none!important}}
+#mcur{position:fixed;left:0;top:0;z-index:2147483647;pointer-events:none;opacity:0;transition:opacity .15s;will-change:transform}
+#mcur.on{opacity:1}#mcur .tip{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px #000}
+#mcur .pill{position:absolute;left:8px;top:10px;white-space:nowrap;padding:3px 10px 2px;border-radius:999px;font:800 15px/1.1 "Barlow Condensed","Teko",sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000;border:1.5px solid #000a;box-shadow:0 3px 10px #0007;background:linear-gradient(180deg,#e40303 0 16.66%,#ff8c00 0 33.33%,#ffed00 0 50%,#008026 0 66.66%,#004dff 0 83.33%,#750787 0) ,#750787;background-size:100% 100%;transform-origin:0 0;transition:transform .18s ease;overflow:hidden}
+#mcur .pill::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 0 30%,#fff5 45%,transparent 60%);background-size:250% 100%;animation:mflow 1.6s linear infinite}
+#mcur .pill b{position:relative;z-index:1;display:inline-block;animation:mwave 1.2s ease-in-out infinite}
+#mcur .pill{animation:mhue 3s ease-in-out infinite alternate}
+@keyframes mflow{from{background-position:150% 0}to{background-position:-100% 0}}@keyframes mwave{50%{transform:translateY(-1px) rotate(-1.5deg)}}@keyframes mhue{to{background-position:0 0;filter:saturate(1.35)}}
+#mcur.hot .pill{transform:scale(1.18)}#mcur.hot .tip{transform:scale(1.4)}
+@media(pointer:coarse),(hover:none){#mcur{display:none!important}}
+@media(prefers-reduced-motion:reduce){#mcur .pill,#mcur .pill b,#mcur .pill::after{animation:none!important}#mcur .pill::after{display:none}}
 
 .st-links span,.st-links::before{opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
 .sidetab:hover .st-links span,.sidetab.open .st-links span,.sidetab:focus-within .st-links span,.sidetab:hover .st-links::before,.sidetab.open .st-links::before,.sidetab:focus-within .st-links::before{opacity:1;visibility:visible;transition:opacity .3s .12s,visibility 0s}

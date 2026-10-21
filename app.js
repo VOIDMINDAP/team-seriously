@@ -34,3 +34,7 @@ addEventListener('scroll',()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;n
  if(scrollY<innerHeight)art.style.translate=`0 ${scrollY*.35}px`})},{passive:true});
 })();
 document.querySelectorAll('.st-drips .drip').forEach(g=>{g.style.setProperty('--d',(Math.random()*6).toFixed(2)+'s');g.style.setProperty('--t',(7+Math.random()*6).toFixed(2)+'s')});
+
+(function(){if(!matchMedia('(pointer:fine)').matches)return;var c=document.createElement('div');c.id='mcur';c.setAttribute('aria-hidden','true');c.innerHTML='<span class="tip"></span><span class="pill"><b>El Mono es Gay</b></span>';document.body.appendChild(c);var x=-100,y=-100,d=0;function f(){d=0;c.style.transform='translate3d('+x+'px,'+y+'px,0)'}
+addEventListener('mousemove',function(e){x=e.clientX;y=e.clientY;c.classList.add('on');c.classList.toggle('hot',!!(e.target.closest&&e.target.closest('a,button,[role=button],summary,label,.card,.clip,input,select,textarea')));if(!d){d=1;requestAnimationFrame(f)}},{passive:true});
+document.documentElement.addEventListener('mouseleave',function(){c.classList.remove('on')});document.addEventListener('mouseout',function(e){if(!e.relatedTarget)c.classList.remove('on')});addEventListener('blur',function(){c.classList.remove('on')})})();
