@@ -1,0 +1,55 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEAM SERIOUSLY · Desde 2006</title><meta name="description" content="Team Seriously. Desde 2006. El clan vuelve.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Teko:wght@400;600&family=Oswald:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='4' fill='%23a3120c'/%3E%3C/svg%3E">
+</head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="emblem" viewBox="0 0 200 200">
+ <g fill="currentColor"><path id="gear" d="M100 14l11 0 4 18a70 70 0 0 1 17 7l16-10 15 15-10 16a70 70 0 0 1 7 17l18 4v22l-18 4a70 70 0 0 1-7 17l10 16-15 15-16-10a70 70 0 0 1-17 7l-4 18H89l-4-18a70 70 0 0 1-17-7l-16 10-15-15 10-16a70 70 0 0 1-7-17l-18-4V89l18-4a70 70 0 0 1 7-17L37 52l15-15 16 10a70 70 0 0 1 17-7l4-18z M100 46a54 54 0 1 0 0.1 0z" fill-rule="evenodd"/></g>
+ <g fill="currentColor"><path d="M100 54c-24 0-40 16-40 38 0 13 6 21 13 26v16h12v-8h6v8h18v-8h6v8h12v-16c7-5 13-13 13-26 0-22-16-38-40-38z"/></g>
+ <g fill="#0d0b0a"><path d="M76 92l18 4-3 14-16-4z M124 92l-18 4 3 14 16-4z M100 112l-6 12h12z"/><rect x="88" y="128" width="3" height="10"/><rect x="109" y="128" width="3" height="10"/></g>
+ <path d="M70 70l60 60" stroke="#a3120c" stroke-width="6" stroke-linecap="square"/>
+</symbol>
+<filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+</defs></svg>
+<canvas id="fx" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
+<nav class="nav"><a href="#top" class="brand"><svg><use href="#emblem"/></svg>TS</a>
+<div class="links"><a href="#historia">Historia</a><a href="#escuadron">Escuadrón</a><a href="#envivo">En vivo</a><a href="#jugando">Jugando</a><a href="#destacados">Destacados</a></div></nav>
+
+<header id="top" class="hero"><div class="metal parallax" data-speed="0.3"></div>
+ <svg class="splat" viewBox="0 0 400 400" aria-hidden="true"><g filter="url(#rough)" fill="#8f0d08"><circle cx="200" cy="200" r="120"/><circle cx="330" cy="120" r="22"/><circle cx="80" cy="300" r="16"/><circle cx="350" cy="290" r="10"/><circle cx="60" cy="110" r="12"/><path d="M200 300l14 90-28 0z M110 170l-100-30 6-20z M300 230l90 40-8 16z"/></g></svg>
+ <div class="hero-in"><svg class="hero-emblem"><use href="#emblem"/></svg>
+ <p class="kicker">Desde 2006</p>
+ <h1 class="glitch" data-text="TEAM SERIOUSLY">TEAM SERIOUSLY</h1>
+ <div class="slash" aria-hidden="true"></div>
+ <p class="tag">El clan vuelve</p>
+ <a class="btn" href="#historia">Desplegar escuadrón</a></div>
+ <div class="scroll-hint">▼</div>
+</header>
+
+<main>
+<section id="historia" class="sec"><h2 class="stencil reveal">Historia</h2>
+<div class="lore">
+<p class="reveal">Corría el año <b>2006</b>. El mundo era ceniza, estática y metal oxidado. En medio del ruido, cuatro señales se encontraron en la misma frecuencia. No fue un reclutamiento. Fue un pacto.</p>
+<p class="reveal">Lo llamaron <b>Team Seriously</b>, aunque nadie se lo tomaba demasiado en serio… excepto una cosa: <em>nunca dejar a un hermano atrás.</em> Noches enteras de trincheras, risas por el micrófono, derrotas que dolían y victorias que se volvieron leyenda.</p>
+<p class="reveal">Los años pasaron. Las consolas cambiaron, los mapas se borraron, la vida jaló a cada quien a su propio frente de batalla. Pero las amistades forjadas en fuego no se oxidan: <b>se templan.</b></p>
+<p class="reveal">Hoy la radio vuelve a crepitar. Las brasas, que nunca se apagaron, arden otra vez. El escuadrón se reagrupa, más viejo, más sabio, igual de peligroso.</p>
+<blockquote class="reveal">“No somos un clan. Somos una hermandad que se niega a morir.”</blockquote>
+<p class="reveal big">El clan vuelve. <span>Y sigue activo.</span></p>
+</div></section>
+
+<section id="escuadron" class="sec"><h2 class="stencil reveal">Escuadrón</h2><div class="cards" id="squad"></div></section>
+
+<section id="envivo" class="sec"><h2 class="stencil reveal">En vivo</h2><p class="sub reveal">Las transmisiones del escuadrón. Sintoniza la frecuencia.</p><div class="streams" id="streams"></div></section>
+
+<section id="jugando" class="sec"><h2 class="stencil reveal">Jugando ahora</h2><div class="games" id="games"></div></section>
+
+<section id="destacados" class="sec"><h2 class="stencil reveal">Destacados</h2><p class="sub reveal">Las jugadas que se contarán por generaciones.</p><div class="clips" id="clips"></div></section>
+</main>
+
+<footer class="foot"><svg class="foot-emblem"><use href="#emblem"/></svg>
+<p class="motto">“Juntos desde las cenizas. Juntos hasta el final.”</p><p class="small">TEAM SERIOUSLY · 2006 — SIEMPRE · Sitio tributo no oficial, sin afiliación con ninguna marca.</p></footer>
+
+<dialog id="modal"><button class="x" aria-label="Cerrar">✕</button><div id="modal-body"></div></dialog>
+<script src="data/config.js"></script><script src="app.js"></script></body></html>
