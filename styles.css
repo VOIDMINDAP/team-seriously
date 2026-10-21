@@ -116,3 +116,4 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(4px)}dialog[open]{animati
 @keyframes stGrow{0%{transform:scaleY(calc(var(--h)*.55))}70%{transform:scaleY(calc(var(--h)*1.25))}76%{transform:scaleY(calc(var(--h)*.6))}100%{transform:scaleY(calc(var(--h)*.55))}}
 @keyframes stFall{0%,70%{opacity:0;transform:translateY(0)}72%{opacity:.95;transform:translateY(0)}100%{opacity:0;transform:translateY(46px)}}
 @media(prefers-reduced-motion:reduce){.dr-body,.dr-hl,.dr-drop{animation:none}.dr-drop{display:none}}
+@media (max-width:900px),not all and (hover:hover) and (pointer:fine){.sidetab{display:none!important}}
