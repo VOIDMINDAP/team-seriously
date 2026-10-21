@@ -6,7 +6,7 @@ window.TS_CONFIG = {
   redes: {
     twitch:  "https://www.twitch.tv/teamseriously2006",
     discord: "https://discord.gg/q29QrADBXQ",
-    youtube: ""
+    youtube: "https://www.youtube.com/@TeamSeriously"
   },
   miembros: {
     mono:     { twitch: "" },
