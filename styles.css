@@ -93,3 +93,5 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(4px)}dialog[open]{animati
 .st-links span{font:600 13px 'Barlow Condensed';letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .st-links::before{content:"SÍGUENOS";font:700 11px 'Barlow Condensed';letter-spacing:.3em;color:#b00d08;padding:6px 22px 4px 52px}
 @media(max-width:900px){.sidetab{transform:translate(calc(100% - 40px),-50%)}.st-links a{padding:10px 16px 10px 10px}.st-links svg{width:19px;height:19px}.st-links::before{padding-left:40px}}
+@media(pointer:fine){html,body{cursor:url(img/cursor-lancer.png) 1 1,auto;cursor:-webkit-image-set(url(img/cursor-lancer.png) 1x,url(img/cursor-lancer@2x.png) 2x) 1 1,auto;cursor:image-set(url(img/cursor-lancer.png) 1x,url(img/cursor-lancer@2x.png) 2x) 1 1,auto}
+a,button,[role=button],summary,label,.card{cursor:url(img/cursor-lancer-hot.png) 1 1,pointer;cursor:-webkit-image-set(url(img/cursor-lancer-hot.png) 1x,url(img/cursor-lancer-hot@2x.png) 2x) 1 1,pointer;cursor:image-set(url(img/cursor-lancer-hot.png) 1x,url(img/cursor-lancer-hot@2x.png) 2x) 1 1,pointer}}
