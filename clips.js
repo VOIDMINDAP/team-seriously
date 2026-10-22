@@ -1,4 +1,4 @@
-(()=>{const EP='https://fra.cloud.appwrite.io/v1',PJ='teamseriously',BK='clips',DB='ts',CO='slots',MAX=300*1024*1024,PART=45*1024*1024,CH=5*1024*1024;
+(()=>{const EP='https://fra.cloud.appwrite.io/v1',PJ='teamseriously',BK='clips',DB='ts',CO='slots',MAX=300*1024*1024,YTMAX=256*1024**3,YCH=16*1024*1024,PART=45*1024*1024,CH=5*1024*1024;
 const $=s=>document.querySelector(s),box=$('#clips'),esc=t=>String(t||'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const EM='teamseriously+clan@mail.grokbot.com',FK='ts_aw_fb';const H={'X-Appwrite-Project':PJ};
 const hd=(x={})=>{const f=localStorage.getItem(FK);return f?{...H,...x,'X-Fallback-Cookies':f}:{...H,...x}};
@@ -21,41 +21,35 @@ function play(d){TS_open(`<div class="lightbox"><div class="modal-h">${esc(d.tit
   if(st.requestFullscreen)st.requestFullscreen().catch(()=>v&&v.webkitEnterFullscreen&&v.webkitEnterFullscreen());else if(st.webkitRequestFullscreen)st.webkitRequestFullscreen();else if(v&&v.webkitEnterFullscreen)v.webkitEnterFullscreen()}}
 TS_dlg.addEventListener('close',()=>TS_dlg.classList.remove('wide'));
 function form(c){if(c.querySelector('form'))return;const n=+c.dataset.slot;
- c.innerHTML=`<form class="up"><div class="screen"><label class="pick">+<input type="file" accept="${TYPES}" hidden></label><div class="bar" hidden><i></i><em>0%</em></div></div><div class="cap"><input class="ttl" maxlength="60" placeholder="TÍTULO (OPCIONAL)">${ME?'':'<input class="clave" type="password" autocomplete="current-password" placeholder="CLAVE DEL ESCUADRÓN">'}<span class="msg">Elige un video · máx. 300 MB</span>${ME?' <a class="salir" href="#">salir</a>':''}</div></form>`;
+ c.innerHTML=`<form class="up"><div class="screen"><label class="pick">+<input type="file" accept="${TYPES}" hidden></label><div class="bar" hidden><i></i><em>0%</em></div></div><div class="cap"><input class="ttl" maxlength="60" placeholder="TÍTULO (OPCIONAL)">${ME?'':'<input class="clave" type="password" autocomplete="current-password" placeholder="CLAVE DEL ESCUADRÓN">'}<span class="msg">Elige un video · máx. 256 GB</span>${ME?' <a class="salir" href="#">salir</a>':''}</div></form>`;
  const so=c.querySelector('.salir');if(so)so.onclick=e=>{e.preventDefault();e.stopPropagation();salir()};
  const f=c.querySelector('input[type=file]'),msg=c.querySelector('.msg');c.onclick=null;if(ME)f.click();else{const k=c.querySelector('.clave');k.focus();k.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();f.click()}}}
  f.onchange=async()=>{const file=f.files[0];if(!file)return;
   if(!OK.test(file.name))return msg.textContent='Formato no válido: usa MP4, WEBM o MOV';
-  if(file.size>MAX)return msg.textContent='Archivo demasiado grande (máx. 300 MB)';
+  if(file.size>YTMAX)return msg.textContent='Archivo demasiado grande (máx. 256 GB)';
   c.querySelector('.pick').hidden=true;const bar=c.querySelector('.bar');bar.hidden=false;
   const prog=p=>{bar.querySelector('i').style.width=p+'%';bar.querySelector('em').textContent=Math.round(p)+'%'};
-  try{if(!ME){const k=c.querySelector('.clave');if(!k.value)throw new Error('Escribe la clave del escuadrón');msg.textContent='Verificando clave…';await login(k.value);k.remove()}msg.textContent='Transmitiendo…';const ttl=c.querySelector('.ttl').value.trim().slice(0,60);
+  try{if(!ME){const k=c.querySelector('.clave');if(!k.value)throw new Error('Escribe la clave del escuadrón');msg.textContent='Verificando clave…';await login(k.value);k.remove()}msg.textContent='Subiendo a YouTube…';const ttl=c.querySelector('.ttl').value.trim().slice(0,60);
    const st=await fn({action:'start',slot:n,size:file.size,mime:file.type||'video/mp4',title:ttl});
-   if(st.uploadUrl){const yv=await ytPut(st.uploadUrl,file,p=>prog(p*.97));const fin=await fn({action:'finish',slot:n,videoId:yv.id,title:ttl});if(!fin.ok)throw new Error(fin.error==='DB'&&fin.status===409?'Este espacio ya fue ocupado':'No se pudo registrar');prog(100);return await load()}
-   if(st.error==='SLOT_TAKEN')throw new Error('Este espacio ya fue ocupado');if(st.error!=='NOT_CONFIGURED')throw new Error(st.error==='FORBIDDEN'?'Clave requerida':'YouTube no respondió');
-   const poster=await thumb(file).catch(()=>null);
-   const np=Math.ceil(file.size/PART),ids=[];for(let i=0;i<np;i++){const a=i*PART,bl=file.slice(a,Math.min(a+PART,file.size)),pf=np>1?new File([bl],'part'+i+file.name.slice(file.name.lastIndexOf('.')),{type:file.type}):file;
-    ids.push((await upload(pf,p=>prog((a+p/100*bl.size)/file.size*95))).$id)}const vid={$id:ids[0]};let pid=null;
-   if(poster)pid=(await upload(new File([poster],'poster.jpg',{type:'image/jpeg'}),()=>{}).catch(()=>({})))?.$id||null;
-   const r=await api(`/databases/${DB}/collections/${CO}/documents`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({documentId:'slot'+n,data:{slot:n,title:ttl,fileId:vid.$id,posterId:pid,parts:np>1?ids.join(','):null,size:file.size,mime:file.type.slice(0,40)}})});
-   if(!r.ok)throw new Error(r.status===401?'Clave requerida':r.status===409?'Este espacio ya fue ocupado':'No se pudo registrar');prog(100);await load()}
+   if(st.uploadUrl){const pr=p=>{prog(p*.97);msg.textContent='Subiendo a YouTube…'};pr.retry=k=>msg.textContent=`Conexión inestable · reintentando (${k})…`;const yv=await ytPut(st.uploadUrl,file,pr);msg.textContent='Registrando…';const fin=await fn({action:'finish',slot:n,videoId:yv.id,title:ttl});if(!fin.ok)throw new Error(fin.error==='DB'&&fin.status===409?'Este espacio ya fue ocupado':'No se pudo registrar');prog(100);return await load()}
+   throw new Error(st.error==='SLOT_TAKEN'?'Este espacio ya fue ocupado':st.error==='FORBIDDEN'?'Clave requerida':st.error==='NOT_CONFIGURED'?'Subidas a YouTube no configuradas':'YouTube no respondió, intenta de nuevo')}
   catch(e){if(/Clave/.test(e.message)&&!ME){}msg.textContent=e.message||'Error al subir';bar.hidden=true;c.querySelector('.pick').hidden=false;f.value=''}}}
 async function fn(body){const r=await api('/functions/yt/executions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({body:JSON.stringify(body),async:false,method:'POST',path:'/',headers:{'content-type':'application/json'}})});
  if(r.status===401)throw new Error('Clave requerida');const e=await r.json();let j={};try{j=JSON.parse(e.responseBody||'{}')}catch(_){}return j}
-function ytPut(url,file,on){return new Promise((ok,ko)=>{const x=new XMLHttpRequest();x.open('PUT',url);x.setRequestHeader('Content-Type',file.type||'video/mp4');x.upload.onprogress=e=>on(e.loaded/e.total*100);
- x.onload=()=>{let j={};try{j=JSON.parse(x.responseText)}catch(_){}x.status<300&&j.id?ok(j):ko(new Error('YouTube rechazó el video'))};x.onerror=()=>ko(new Error('Error de red con YouTube'));x.send(file)})}
+// Chunked resumable upload: sends YCH-sized slices with Content-Range (never whole file in memory), resumes from YouTube's acknowledged offset on failure.
+function ytReq(url,type,body,range,on){return new Promise((ok,ko)=>{const x=new XMLHttpRequest();x.open('PUT',url);x.setRequestHeader('Content-Type',type);x.setRequestHeader('Content-Range',range);
+ if(on)x.upload.onprogress=e=>on(e.loaded);x.onload=()=>ok(x);x.onerror=()=>ko(new Error('net'));x.ontimeout=()=>ko(new Error('net'));x.send(body)})}
+const ackd=x=>{const r=x.getResponseHeader('Range');const m=r&&/bytes=0-(\d+)/.exec(r);return m?+m[1]+1:null};
+async function ytPut(url,file,on){const T=file.size,ty=file.type||'video/mp4';let off=0,fails=0;
+ const done=x=>{let j={};try{j=JSON.parse(x.responseText)}catch(_){}if(j.id)return j;throw new Error('YouTube rechazó el video')};
+ while(true){const end=Math.min(off+YCH,T);let x;
+  try{x=await ytReq(url,ty,file.slice(off,end),`bytes ${off}-${end-1}/${T}`,l=>on((off+l)/T*100))}catch(e){x=null}
+  if(x&&(x.status===200||x.status===201))return done(x);
+  if(x&&x.status===308){const a=ackd(x);off=a!=null?a:0;fails=0;on(off/T*100);continue}
+  if(x&&x.status>=400&&x.status<500&&x.status!==408&&x.status!==429)throw new Error(x.status===404||x.status===410?'La sesión de subida expiró; vuelve a intentarlo':'YouTube rechazó el video');
+  if(++fails>10)throw new Error('Se perdió la conexión con YouTube. Revisa tu red y vuelve a intentarlo');if(on.retry)on.retry(fails);await new Promise(r=>setTimeout(r,Math.min(30000,1000*2**fails)));
+  try{const q=await ytReq(url,ty,null,`bytes */${T}`);if(q.status===200||q.status===201)return done(q);if(q.status===308){const a=ackd(q);off=a!=null?a:0;on(off/T*100)}}catch(_){}}}
 async function joinParts(d,v,st){const ids=d.parts.split(','),tot=d.size||0;let got=0;const bx=document.createElement('div');bx.className='bar lb-bar';bx.innerHTML='<i></i><em>CARGANDO 0%</em>';st.appendChild(bx);
  const bufs=[];try{for(const id of ids){const r=await fetch(view(id));if(!r.ok)throw 0;const rd=r.body.getReader();for(;;){const {done,value}=await rd.read();if(done)break;bufs.push(value);got+=value.length;const p=tot?Math.min(100,got/tot*100):0;bx.querySelector('i').style.width=p+'%';bx.querySelector('em').textContent='CARGANDO '+Math.round(p)+'%'}}
  if(!v.isConnected)return;const u=URL.createObjectURL(new Blob(bufs,{type:d.mime||'video/mp4'}));v.src=u;bx.remove();v.play().catch(()=>{});TS_dlg.addEventListener('close',()=>URL.revokeObjectURL(u),{once:true})}catch(e){bx.querySelector('em').textContent='ERROR AL CARGAR'}}
-function upload(file,on){return new Promise(async(res,rej)=>{let id=null,off=0,last;
- while(off<file.size){const end=Math.min(off+CH,file.size);const fd=new FormData();fd.append('fileId',id||'unique()');fd.append('file',file.slice(off,end),file.name);
-  try{last=await new Promise((ok,ko)=>{const x=new XMLHttpRequest();x.open('POST',`${EP}/storage/buckets/${BK}/files`);x.withCredentials=true;Object.entries(hd()).forEach(([a,b])=>x.setRequestHeader(a,b));
-   if(file.size>CH)x.setRequestHeader('Content-Range',`bytes ${off}-${end-1}/${file.size}`);if(id)x.setRequestHeader('X-Appwrite-ID',id);
-   x.upload.onprogress=e=>on((off+e.loaded*(end-off)/e.total)/file.size*100);
-   x.onload=()=>{let j={};try{j=JSON.parse(x.responseText)}catch(_){}const fb=x.getResponseHeader('X-Fallback-Cookies');if(fb)localStorage.setItem(FK,fb);x.status<300?ok(j):ko(x.status===401?new Error('Clave requerida'):new Error(j.message||'Error al subir'))};x.onerror=()=>ko(new Error('Error de red'));x.send(fd)})}catch(e){return rej(e)}
-  id=last.$id;off=end}res(last)})}
-function thumb(file){return new Promise((res,rej)=>{const v=document.createElement('video'),u=URL.createObjectURL(file);v.muted=true;v.playsInline=true;v.preload='auto';v.src=u;
- const t=setTimeout(()=>rej(),8000);v.onerror=()=>{clearTimeout(t);rej()};v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||2)/3)};
- v.onseeked=()=>{const k=document.createElement('canvas'),w=Math.min(960,v.videoWidth||960);k.width=w;k.height=Math.round(w*(v.videoHeight||540)/(v.videoWidth||960));
-  k.getContext('2d').drawImage(v,0,0,k.width,k.height);k.toBlob(b=>{clearTimeout(t);URL.revokeObjectURL(u);b?res(b):rej()},'image/jpeg',.82)}})}
 render();who().then(load)})();
