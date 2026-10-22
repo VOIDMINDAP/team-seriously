@@ -22,10 +22,7 @@ $('#games').innerHTML=G.map(([t,s,i])=>`<div class="game reveal"><img src="img/g
 const yt=u=>{const m=u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);return m&&m[1]};
 const tw=u=>{const m=u.match(/clips\.twitch\.tv\/([\w-]+)/)||u.match(/twitch\.tv\/\w+\/clip\/([\w-]+)/);return m&&m[1]};
 const embed=u=>{let id;if(id=yt(u))return`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;if(id=tw(u))return`<iframe src="https://clips.twitch.tv/embed?clip=${id}&parent=${host}&autoplay=true" allowfullscreen></iframe>`;return`<video src="${u}" controls autoplay style="width:100%;height:100%"></video>`};
-const clips=(C.clips||[]).filter(c=>c&&c.url);
-let h=clips.map((c,i)=>{const id=yt(c.url);const th=id?`style="background:url(https://i.ytimg.com/vi/${id}/hqdefault.jpg) center/cover"`:'';return`<button class="clip reveal" data-i="${i}"><div class="screen" ${th}>▶</div><div class="cap"><b>${c.titulo||'Clip'}</b><span>${c.autor||''}</span></div></button>`}).join('');
-for(let k=0;k<Math.max(1,4-clips.length);k++)h+=`<div class="clip empty reveal"><div class="screen">+</div><div class="cap"><b>SUBE TU CLIP</b></div></div>`;
-$('#clips').innerHTML=h;document.querySelectorAll('.clip[data-i]').forEach(b=>b.onclick=()=>{const c=clips[b.dataset.i];open(`<div class="clipbox"><div class="modal-h">${c.titulo||''}</div><div class="screen" style="margin-top:1rem">${embed(c.url)}</div></div>`)});
+window.TS_open=open;window.TS_dlg=dlg;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*90+'ms';io.observe(el)});
 const nav=$('.nav'),px=document.querySelectorAll('.parallax'),art=$('.hero-art');let tk=0;const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
