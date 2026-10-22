@@ -145,3 +145,4 @@ dialog.wide{width:min(1280px,96vw)}
 .clip .salir{font-size:12px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;text-decoration:underline;margin-left:4px}.clip .salir:hover{color:var(--red)}
 #clips-salir{text-align:right;margin-top:10px}
 .lb-bar{position:absolute;left:12%;right:12%;top:50%;height:6px;background:#ffffff1a;border:1px solid #ffffff30}.lb-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5e0603,var(--red));box-shadow:0 0 14px #b00d0899}.lb-bar em{position:absolute;right:0;top:12px;font:700 14px var(--hd);font-style:normal;letter-spacing:.1em;color:#fff}.lb-stage video:not([src]){aspect-ratio:16/9}
+.lb-yt{position:relative;aspect-ratio:16/9;width:100%;max-height:74vh}.lb-yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.lb-stage:fullscreen .lb-yt{width:100vw;height:100vh;max-height:none;aspect-ratio:auto}
